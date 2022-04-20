@@ -58,22 +58,22 @@ Color getConnectionColor(Connection connection) {
   return color!;
 }
 
-// / converts the network events to the appropriate user-readable strings
-// String getConnectionMessage(Connection connection) {
-//   var msg = 'Unknown connection';
-//   switch (connection) {
-//     case Connection.wifi:
-//       msg = 'Connected to Wifi';
-//       break;
-//     case Connection.cellular:
-//       msg = 'Connected to mobile data';
-//       break;
-//     case Connection.disconnected:
-//       msg = 'Offline';
-//       break;
-//     case Connection.unknown:
-//       msg = 'Unknown connection';
-//       break;
-//   }
-//   return msg;
-// }
+//  converts the network events to the appropriate user-readable strings
+String getConnectionMessage(Connection connection) {
+  var msg = 'Unknown connection';
+  switch (connection) {
+    case Connection.wifi:
+      msg = 'Connected to Wifi';
+      break;
+    case Connection.cellular:
+      msg = 'Connected to mobile data';
+      break;
+    case Connection.disconnected:
+      msg = 'Offline';
+      break;
+    case Connection.unknown:
+      msg = 'Unknown connection';
+      break;
+  }
+  return msg;
+}
