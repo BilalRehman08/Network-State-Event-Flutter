@@ -1,5 +1,4 @@
 package com.raywenderlich.platform_channel_events
-
 import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager

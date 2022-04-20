@@ -1,5 +1,4 @@
 package com.raywenderlich.platform_channel_events
-
 import android.app.Activity
 import io.flutter.plugin.common.EventChannel
 

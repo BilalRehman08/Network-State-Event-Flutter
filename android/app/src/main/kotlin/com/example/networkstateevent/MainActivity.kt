@@ -12,6 +12,5 @@ class MainActivity: FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         EventChannel(flutterEngine.dartExecutor.binaryMessenger, networkEventChannel)
             .setStreamHandler(NetworkStreamHandler(this))
-
     }
 }
