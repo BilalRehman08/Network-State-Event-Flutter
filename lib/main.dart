@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'network_stream_widget.dart';
+import 'streams/network_stream_widget.dart';
 
 void main() {
   runApp(const MyApp());
