@@ -24,9 +24,15 @@ class _NetworkStreamWidgetState extends State<NetworkStreamWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return const _NetworkStateWidget(
-      message: 'Not setup',
-      color: Colors.red,
+    return StreamBuilder<Connection>(
+      initialData: Connection.disconnected,
+      stream: networkStream,
+      builder: (context, snapshot) {
+        final connection = snapshot.data ?? Connection.unknown;
+        final message = getConnectionMessage(connection);
+        final color = getConnectionColor(connection);
+        return _NetworkStateWidget(message: message, color: color);
+      },
     );
   }
 }
