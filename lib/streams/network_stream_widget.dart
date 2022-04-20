@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// NetworkStreamWidget handles and displays streaming of network events
 class NetworkStreamWidget extends StatelessWidget {
+  final eventChannel =
+      const EventChannel('platform_channel_events/connectivity');
+
   /// Initialize NetworkStreamWidget with [key].
   const NetworkStreamWidget({Key? key}) : super(key: key);
 
