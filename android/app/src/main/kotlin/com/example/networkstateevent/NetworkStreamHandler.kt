@@ -3,6 +3,7 @@ package com.raywenderlich.platform_channel_events
 import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Build
@@ -19,12 +20,36 @@ class NetworkStreamHandler(private var activity: Activity?) : EventChannel.Strea
 
     }
 
-    override fun onCancel(arguments: Any?) {}
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun onCancel(arguments: Any?) {
+        stopListeningNetworkChanges()
+        eventSink = null
+        activity = null
+
+    }
 
     private val networkCallback = @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     object : ConnectivityManager.NetworkCallback() {
+        override fun onLost(network: Network) {
+            super.onLost(network)
+            // Notify Flutter that the network is disconnected
+            activity?.runOnUiThread { eventSink?.success(Constants.disconnected) }
+        }
 
+        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+        override fun onCapabilitiesChanged(network: Network, netCap: NetworkCapabilities) {
+            super.onCapabilitiesChanged(network, netCap)
+            // Pick the supported network states and notify Flutter of this new state
+            val status =
+                when {
+                    netCap.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> Constants.wifi
+                    netCap.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> Constants.cellular
+                    else -> Constants.unknown
+                }
+            activity?.runOnUiThread { eventSink?.success(status) }
+        }
     }
+
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun startListeningNetworkChanges() {
